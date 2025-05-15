@@ -8,6 +8,9 @@
 # 50 7 * * * ~/mongobackupscripts/mongo_s3_backup.sh >> /tmp/mongo_s3_backup.log
 # The above runs at 7:50 am UTC or 12:50 am PDT
 
+# This can be used as sample data to test with:
+# https://docs.aws.amazon.com/dms/latest/sbs/chap-mongodb2documentdb.02.html
+
 MONGO_BACKUP_FILENAME=$(date "+%H-%M-%S-UTC.mongo_backup" -u)
 
 mongodump -h localhost:27017 -d mydb -o $MONGO_BACKUP_FILENAME
