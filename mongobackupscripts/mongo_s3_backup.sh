@@ -13,7 +13,7 @@
 
 MONGO_BACKUP_FILENAME=$(date "+%H-%M-%S-UTC.mongo_backup" -u)
 
-mongodump -h localhost:27017 -d mydb -o $MONGO_BACKUP_FILENAME
+mongodump -h localhost:27017 -d go-mongodb -o $MONGO_BACKUP_FILENAME
 
 aws s3 cp $MONGO_BACKUP_FILENAME s3://my-tf-mongo-backup-bucket-for-wiz-testing-environment-akmal/$(date +%m-%d-%y) --recursive
 
