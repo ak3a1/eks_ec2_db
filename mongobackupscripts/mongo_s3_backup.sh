@@ -12,9 +12,10 @@
 # https://docs.aws.amazon.com/dms/latest/sbs/chap-mongodb2documentdb.02.html
 
 MONGO_BACKUP_FILENAME=$(date "+%H-%M-%S-UTC.mongo_backup" -u)
+MONGO_BACKUP_LOGFILE="/tmp/mongo_s3_backup.log"
 
-mongodump -h localhost:27017 --username=root --password=mypassword --authenticationDatabase=admin -d go-mongodb -o $MONGO_BACKUP_FILENAME &>>/tmp/mongo_s3_backup.log
+mongodump -h localhost:27017 --username=root --password=mypassword --authenticationDatabase=admin -d go-mongodb -o $MONGO_BACKUP_FILENAME &>>$MONGO_BACKUP_LOGFILE
 
-aws s3 cp $MONGO_BACKUP_FILENAME s3://my-tf-mongo-backup-bucket-for-wiz-testing-environment-akmal/$(date +%m-%d-%y) --recursive &>>/tmp/mongo_s3_backup.log
+aws s3 cp $MONGO_BACKUP_FILENAME s3://my-tf-mongo-backup-bucket-for-wiz-testing-environment-akmal/$(date +%m-%d-%y) --recursive &>>$MONGO_BACKUP_LOGFILE
 
 rm -rf $MONGO_BACKUP_FILENAME
